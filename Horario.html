@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Horarios - Restaurante</title>
+    <title>Horario Restaurante Barquilla</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
@@ -21,7 +21,7 @@
         }
 
         button {
-            background-color: #25D366; /* Verde WhatsApp */
+            background-color: #25D366;
             color: white;
             border: none;
             padding: 15px 30px;
@@ -37,14 +37,14 @@
             background-color: #128C7E;
         }
 
-        /* Contenedor principal que será capturado en la imagen */
         #horario-container {
             background-color: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 1100px; /* Ancho fijo para asegurar buena calidad de imagen */
+            width: 1350px; /* Ancho optimizado para nombres y horas largas */
             max-width: 100%;
+            overflow-x: auto;
         }
 
         h1 {
@@ -53,13 +53,8 @@
             margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 2px;
-        }
-
-        .sub-header {
-            text-align: center;
-            color: #666;
-            margin-bottom: 20px;
-            font-style: italic;
+            font-size: 26px;
+            font-weight: 800;
         }
 
         table {
@@ -70,19 +65,20 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 5px;
             text-align: center;
         }
 
-        /* Estilos de los inputs */
+        /* Inputs para las horas */
         input[type="text"] {
-            width: 95%;
+            width: 98%;
             border: none;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             font-family: inherit;
             background: transparent;
-            padding: 5px;
+            padding: 4px;
         }
         
         input[type="text"]:focus {
@@ -90,101 +86,122 @@
             outline: none;
         }
 
+        /* Estilo especial para la columna de Nombres */
         input.nombre-empleado {
-            font-weight: bold;
+            font-weight: 800; /* Letra más gruesa para los nombres */
             text-align: left;
-            padding-left: 10px;
+            padding-left: 8px;
+            font-size: 14px;
+            color: #2c3e50;
+            text-transform: uppercase; /* Fuerza mayúsculas visualmente */
         }
 
-        /* Encabezados de Días */
         thead th {
-            background-color: #333;
+            background-color: #222;
             color: white;
-            padding: 12px;
-            font-size: 16px;
+            padding: 10px;
+            font-size: 14px;
         }
 
-        /* Secciones */
         .section-header {
             text-align: left;
-            padding: 10px;
+            padding: 8px;
             color: white;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 15px;
         }
 
-        .sala-header {
-            background-color: #0056b3; /* Azul Profesional */
-        }
+        /* Colores corporativos funcionales */
+        .sala-header { background-color: #0056b3; } /* Azul */
+        .cocina-header { background-color: #d35400; } /* Naranja */
 
-        .cocina-header {
-            background-color: #d35400; /* Naranja Quemado */
-        }
-
-        /* Filas alternas para mejor lectura */
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+        tbody tr:nth-child(even) { background-color: #f8f9fa; }
 
         .input-fecha {
             border: none;
             font-size: 16px;
             font-weight: bold;
-            color: #666;
+            color: #555;
             text-align: center;
-            width: 300px;
-            margin-bottom: 10px;
+            width: 450px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
-
     </style>
 </head>
 <body>
 
     <div class="control-panel">
-        <p style="color: #555; margin-bottom: 10px;">Rellena los horarios y pulsa el botón para descargar la imagen.</p>
-        <button onclick="descargarImagen()">📸 DESCARGAR HORARIO PARA WHATSAPP</button>
+        <button onclick="descargarImagen()">📸 DESCARGAR HORARIO (BARQUILLA)</button>
     </div>
 
     <div id="horario-container">
-        <h1>Horario Semanal del Equipo</h1>
+        <h1>HORARIO SEMANAL RESTAURANTE BARQUILLA</h1>
         <div style="text-align: center;">
-            <input type="text" class="input-fecha" placeholder="EJ: SEMANA DEL 10 AL 16 DE OCTUBRE" value="SEMANA DEL ___ AL ___ DE ________">
+            <input type="text" class="input-fecha" placeholder="EJ: SEMANA DEL 26 ENE AL 2 FEB" value="SEMANA DEL ___ AL ___ DE ________ DE 2026">
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th style="width: 15%;">EMPLEADO</th>
-                    <th style="width: 17%;">LUNES</th>
-                    <th style="width: 17%;">MARTES</th>
-                    <th style="width: 17%;">MIÉRCOLES</th>
-                    <th style="width: 17%;">JUEVES</th>
-                    <th style="width: 17%;">VIERNES</th>
+                    <th style="width: 12%;">EMPLEADO</th>
+                    <th style="width: 12%;">LUNES</th>
+                    <th style="width: 12%;">MARTES</th>
+                    <th style="width: 12%;">MIÉRCOLES</th>
+                    <th style="width: 12%;">JUEVES</th>
+                    <th style="width: 12%;">VIERNES</th>
+                    <th style="width: 12%; background-color: #444;">SÁBADO</th>
+                    <th style="width: 12%; background-color: #444;">DOMINGO</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td colspan="6" class="section-header sala-header">🔷 SALA Y BARRA</td>
-                </tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td colspan="8" class="section-header sala-header">🔷 CAMAREROS / SALA</td></tr>
+                
+                <tr><td><input type="text" class="nombre-empleado" value="LEIDY"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                
+                <tr><td><input type="text" class="nombre-empleado" value="LUIS"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
 
-                <tr>
-                    <td colspan="6" class="section-header cocina-header">🔥 COCINA</td>
-                </tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
-                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" value="MIGUEL"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="JIMMY"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="JUAN"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="CHERLY"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                
+                <tr><td><input type="text" class="nombre-empleado" value="GERMAN"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="LUISMI"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="" placeholder="(VACANTE)"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td colspan="8" class="section-header cocina-header">🔥 COCINA</td></tr>
+                
+                <tr><td><input type="text" class="nombre-empleado" value="ASMAE"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="HANANE"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="YENY"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="EMMANUEL"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr><td><input type="text" class="nombre-empleado" value="NASIA"></td>
+                    <td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
             </tbody>
         </table>
         <div style="text-align: center; color: #888; font-size: 12px; margin-top: 10px;">
@@ -194,20 +211,16 @@
 
     <script>
         function descargarImagen() {
-            // Seleccionamos el contenedor del horario
             const elemento = document.getElementById("horario-container");
-            
-            // Usamos html2canvas para crear la imagen
             html2canvas(elemento, {
-                scale: 2, // Mejora la calidad de la imagen (más nítida para móviles)
-                backgroundColor: "#ffffff" // Asegura fondo blanco
+                scale: 2, // Alta calidad
+                backgroundColor: "#ffffff",
+                windowWidth: 1400 // Asegura que no se corte nada
             }).then(canvas => {
-                // Crear un enlace temporal para descargar la imagen
                 const link = document.createElement("a");
-                // Nombre del archivo con la fecha de hoy para que no se sobrescriba
                 const fecha = new Date().toISOString().slice(0,10);
-                link.download = `Horario-Restaurante-${fecha}.jpg`;
-                link.href = canvas.toDataURL("image/jpeg", 0.9); // Calidad JPG alta
+                link.download = `Horario-Barquilla-${fecha}.jpg`;
+                link.href = canvas.toDataURL("image/jpeg", 0.9);
                 link.click();
             });
         }
