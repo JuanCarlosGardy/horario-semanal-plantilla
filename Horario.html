@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Horarios - Restaurante</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .control-panel {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #25D366; /* Verde WhatsApp */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #128C7E;
+        }
+
+        /* Contenedor principal que será capturado en la imagen */
+        #horario-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 1100px; /* Ancho fijo para asegurar buena calidad de imagen */
+            max-width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sub-header {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        /* Estilos de los inputs */
+        input[type="text"] {
+            width: 95%;
+            border: none;
+            text-align: center;
+            font-size: 14px;
+            font-family: inherit;
+            background: transparent;
+            padding: 5px;
+        }
+        
+        input[type="text"]:focus {
+            background-color: #eef;
+            outline: none;
+        }
+
+        input.nombre-empleado {
+            font-weight: bold;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        /* Encabezados de Días */
+        thead th {
+            background-color: #333;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        /* Secciones */
+        .section-header {
+            text-align: left;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sala-header {
+            background-color: #0056b3; /* Azul Profesional */
+        }
+
+        .cocina-header {
+            background-color: #d35400; /* Naranja Quemado */
+        }
+
+        /* Filas alternas para mejor lectura */
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .input-fecha {
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            text-align: center;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <p style="color: #555; margin-bottom: 10px;">Rellena los horarios y pulsa el botón para descargar la imagen.</p>
+        <button onclick="descargarImagen()">📸 DESCARGAR HORARIO PARA WHATSAPP</button>
+    </div>
+
+    <div id="horario-container">
+        <h1>Horario Semanal del Equipo</h1>
+        <div style="text-align: center;">
+            <input type="text" class="input-fecha" placeholder="EJ: SEMANA DEL 10 AL 16 DE OCTUBRE" value="SEMANA DEL ___ AL ___ DE ________">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">EMPLEADO</th>
+                    <th style="width: 17%;">LUNES</th>
+                    <th style="width: 17%;">MARTES</th>
+                    <th style="width: 17%;">MIÉRCOLES</th>
+                    <th style="width: 17%;">JUEVES</th>
+                    <th style="width: 17%;">VIERNES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6" class="section-header sala-header">🔷 SALA Y BARRA</td>
+                </tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+
+                <tr>
+                    <td colspan="6" class="section-header cocina-header">🔥 COCINA</td>
+                </tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+                <tr><td><input type="text" class="nombre-empleado" placeholder="Nombre..."></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td><td><input type="text" placeholder="Turno"></td></tr>
+            </tbody>
+        </table>
+        <div style="text-align: center; color: #888; font-size: 12px; margin-top: 10px;">
+            Horario sujeto a cambios por necesidades del servicio.
+        </div>
+    </div>
+
+    <script>
+        function descargarImagen() {
+            // Seleccionamos el contenedor del horario
+            const elemento = document.getElementById("horario-container");
+            
+            // Usamos html2canvas para crear la imagen
+            html2canvas(elemento, {
+                scale: 2, // Mejora la calidad de la imagen (más nítida para móviles)
+                backgroundColor: "#ffffff" // Asegura fondo blanco
+            }).then(canvas => {
+                // Crear un enlace temporal para descargar la imagen
+                const link = document.createElement("a");
+                // Nombre del archivo con la fecha de hoy para que no se sobrescriba
+                const fecha = new Date().toISOString().slice(0,10);
+                link.download = `Horario-Restaurante-${fecha}.jpg`;
+                link.href = canvas.toDataURL("image/jpeg", 0.9); // Calidad JPG alta
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
