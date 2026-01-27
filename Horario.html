@@ -18,31 +18,47 @@
         .control-panel {
             margin-bottom: 20px;
             text-align: center;
+            display: flex;
+            gap: 15px; /* Espacio entre botones */
+            justify-content: center;
         }
 
-        button {
+        /* Botón WhatsApp (Verde) */
+        .btn-whatsapp {
             background-color: #25D366;
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 15px 25px;
+            font-size: 16px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: background-color 0.3s;
         }
+        .btn-whatsapp:hover { background-color: #128C7E; }
 
-        button:hover {
-            background-color: #128C7E;
+        /* Botón Imprimir (Gris Oscuro) */
+        .btn-print {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
         }
+        .btn-print:hover { background-color: #555; }
 
         #horario-container {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 1350px; /* Ancho optimizado para nombres y horas largas */
+            width: 1350px;
             max-width: 100%;
             overflow-x: auto;
         }
@@ -69,7 +85,6 @@
             text-align: center;
         }
 
-        /* Inputs para las horas */
         input[type="text"] {
             width: 98%;
             border: none;
@@ -86,14 +101,13 @@
             outline: none;
         }
 
-        /* Estilo especial para la columna de Nombres */
         input.nombre-empleado {
-            font-weight: 800; /* Letra más gruesa para los nombres */
+            font-weight: 800;
             text-align: left;
             padding-left: 8px;
             font-size: 14px;
             color: #2c3e50;
-            text-transform: uppercase; /* Fuerza mayúsculas visualmente */
+            text-transform: uppercase;
         }
 
         thead th {
@@ -101,6 +115,8 @@
             color: white;
             padding: 10px;
             font-size: 14px;
+            -webkit-print-color-adjust: exact; /* Fuerza color al imprimir */
+            print-color-adjust: exact;
         }
 
         .section-header {
@@ -111,11 +127,12 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 15px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        /* Colores corporativos funcionales */
-        .sala-header { background-color: #0056b3; } /* Azul */
-        .cocina-header { background-color: #d35400; } /* Naranja */
+        .sala-header { background-color: #0056b3 !important; }
+        .cocina-header { background-color: #d35400 !important; }
 
         tbody tr:nth-child(even) { background-color: #f8f9fa; }
 
@@ -129,12 +146,32 @@
             margin-bottom: 15px;
             text-transform: uppercase;
         }
+
+        /* ESTILOS SOLO PARA IMPRESIÓN (PAPEL) */
+        @media print {
+            @page { size: landscape; margin: 1cm; } /* Fuerza horizontal */
+            body { 
+                background: white; 
+                padding: 0; 
+                -webkit-print-color-adjust: exact; 
+            }
+            .control-panel { display: none; } /* Oculta los botones */
+            #horario-container { 
+                box-shadow: none; 
+                width: 100%; 
+                margin: 0; 
+                padding: 0;
+            }
+            h1 { font-size: 20px; margin-top: 0; }
+            input { font-size: 11px; } /* Ajusta letra para papel */
+        }
     </style>
 </head>
 <body>
 
     <div class="control-panel">
-        <button onclick="descargarImagen()">📸 DESCARGAR HORARIO (BARQUILLA)</button>
+        <button class="btn-whatsapp" onclick="descargarImagen()">📸 DESCARGAR (WHATSAPP)</button>
+        <button class="btn-print" onclick="window.print()">🖨️ IMPRIMIR (PAPEL)</button>
     </div>
 
     <div id="horario-container">
@@ -213,9 +250,9 @@
         function descargarImagen() {
             const elemento = document.getElementById("horario-container");
             html2canvas(elemento, {
-                scale: 2, // Alta calidad
+                scale: 2, 
                 backgroundColor: "#ffffff",
-                windowWidth: 1400 // Asegura que no se corte nada
+                windowWidth: 1400 
             }).then(canvas => {
                 const link = document.createElement("a");
                 const fecha = new Date().toISOString().slice(0,10);
