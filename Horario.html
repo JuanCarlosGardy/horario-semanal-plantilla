@@ -6,11 +6,12 @@
     <title>Horario Restaurante Barquilla</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
+        /* ESTILOS GENERALES (PANTALLA) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
             padding: 20px;
-            /* Permitimos que la página sea ancha si es necesario */
+            /* Forzamos ancho mínimo en pantalla para que no se aplaste */
             min-width: 1400px; 
             display: flex;
             flex-direction: column;
@@ -39,7 +40,8 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: background-color 0.3s;
         }
-        
+        .btn-whatsapp:hover { background-color: #128C7E; }
+
         .btn-print {
             background-color: #333;
             color: white;
@@ -50,16 +52,18 @@
             border-radius: 8px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
         }
+        .btn-print:hover { background-color: #555; }
 
         #horario-container {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            /* ELIMINAMOS EL MAX-WIDTH para que no se aplaste */
+            /* Ancho fijo grande para pantalla */
             width: 1450px; 
-            overflow: visible; /* Dejamos que ocupe lo que tenga que ocupar */
+            overflow: visible;
         }
 
         h1 {
@@ -86,10 +90,9 @@
             vertical-align: middle;
         }
 
-        /* TEXTAREA MULTILINEA - Configuración para que no se corte */
         textarea {
             width: 98%;
-            height: 42px; /* Un poco más alto */
+            height: 42px;
             border: none;
             resize: none;
             text-align: center;
@@ -99,7 +102,7 @@
             background: transparent;
             overflow: hidden;
             padding-top: 4px;
-            white-space: pre-wrap; /* Permite saltos de línea naturales */
+            white-space: pre-wrap;
         }
         
         textarea:focus { background-color: #eef; outline: none; }
@@ -121,7 +124,7 @@
             color: white;
             padding: 10px;
             font-size: 14px;
-            white-space: nowrap; /* Impide que los días se monten unos encima de otros */
+            white-space: nowrap;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
@@ -154,21 +157,47 @@
             text-transform: uppercase;
         }
 
-        /* AJUSTES DE IMPRESIÓN */
+        /* ========================================= */
+        /* ESTILOS SOLO PARA IMPRESIÓN (PAPEL)     */
+        /* ========================================= */
         @media print {
-            @page { size: landscape; margin: 0.5cm; }
-            body { 
-                background: white; 
-                padding: 0; 
-                min-width: 0; /* Al imprimir quitamos el ancho forzado */
+            @page { 
+                size: landscape; /* Fuerza horizontal */
+                margin: 5mm;     /* Reduce márgenes al mínimo */
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                min-width: 0 !important; /* Quitamos la restricción de pantalla */
                 display: block;
+                /* EL TRUCO MAESTRO: Zoom al 60% para que quepa todo */
+                zoom: 60%; 
+                -webkit-print-color-adjust: exact; /* Mantiene colores */
             }
-            .control-panel { display: none; }
-            #horario-container { 
-                box-shadow: none; 
-                width: 100%; 
+
+            .control-panel { display: none !important; } /* Oculta botones */
+
+            #horario-container {
+                width: 100% !important; /* Ocupa todo el papel */
+                max-width: 100% !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
-            textarea { font-size: 10px; height: 35px; } 
+
+            /* Asegura que no se corten filas por la mitad */
+            tr { page-break-inside: avoid; }
+            
+            /* Ajuste de fuentes para papel */
+            h1 { font-size: 24px; margin-top: 10px; }
+            input.input-fecha { font-size: 18px; width: 100%; }
+            textarea { 
+                font-size: 12px; /* Letra legible */
+                height: 35px;    /* Altura controlada */
+            }
+            th { font-size: 12px; padding: 5px; }
         }
     </style>
 </head>
@@ -257,9 +286,8 @@
             html2canvas(elemento, {
                 scale: 3, 
                 backgroundColor: "#ffffff",
-                windowWidth: 1500, // Forzamos el ancho para la foto
+                windowWidth: 1500, 
                 onclone: (document) => {
-                    // Truco para que la foto salga perfecta aunque en el móvil se vea con scroll
                     document.getElementById("horario-container").style.width = "1500px";
                 }
             }).then(canvas => {
