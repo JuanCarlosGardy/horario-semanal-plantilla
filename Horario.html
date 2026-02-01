@@ -10,6 +10,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
             padding: 20px;
+            /* Permitimos que la página sea ancha si es necesario */
+            min-width: 1400px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,6 +23,8 @@
             display: flex;
             gap: 15px;
             justify-content: center;
+            position: sticky;
+            left: 0;
         }
 
         .btn-whatsapp {
@@ -35,8 +39,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: background-color 0.3s;
         }
-        .btn-whatsapp:hover { background-color: #128C7E; }
-
+        
         .btn-print {
             background-color: #333;
             color: white;
@@ -47,18 +50,16 @@
             border-radius: 8px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: background-color 0.3s;
         }
-        .btn-print:hover { background-color: #555; }
 
         #horario-container {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 1400px; /* Un poco más ancho para dar aire */
-            max-width: 100%;
-            overflow-x: auto;
+            /* ELIMINAMOS EL MAX-WIDTH para que no se aplaste */
+            width: 1450px; 
+            overflow: visible; /* Dejamos que ocupe lo que tenga que ocupar */
         }
 
         h1 {
@@ -75,7 +76,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            table-layout: fixed; /* Mantiene las columnas firmes */
+            table-layout: fixed;
         }
 
         th, td {
@@ -85,27 +86,24 @@
             vertical-align: middle;
         }
 
-        /* ESTILO NUEVO: Textarea para turnos partidos */
+        /* TEXTAREA MULTILINEA - Configuración para que no se corte */
         textarea {
-            width: 96%;
-            height: 38px; /* Altura suficiente para 2 líneas cómodas */
+            width: 98%;
+            height: 42px; /* Un poco más alto */
             border: none;
-            resize: none; /* Quita el tirador de la esquina */
+            resize: none;
             text-align: center;
             font-family: 'Segoe UI', sans-serif;
-            font-size: 13px; /* Tamaño legible */
-            line-height: 1.2; /* Separación entre líneas ajustada */
+            font-size: 13px;
+            line-height: 1.3;
             background: transparent;
             overflow: hidden;
             padding-top: 4px;
+            white-space: pre-wrap; /* Permite saltos de línea naturales */
         }
+        
+        textarea:focus { background-color: #eef; outline: none; }
 
-        textarea:focus {
-            background-color: #eef;
-            outline: none;
-        }
-
-        /* Mantenemos input solo para el nombre que es corto */
         input.nombre-empleado {
             width: 95%;
             border: none;
@@ -123,6 +121,7 @@
             color: white;
             padding: 10px;
             font-size: 14px;
+            white-space: nowrap; /* Impide que los días se monten unos encima de otros */
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
@@ -155,12 +154,21 @@
             text-transform: uppercase;
         }
 
+        /* AJUSTES DE IMPRESIÓN */
         @media print {
             @page { size: landscape; margin: 0.5cm; }
-            body { background: white; padding: 0; -webkit-print-color-adjust: exact; }
+            body { 
+                background: white; 
+                padding: 0; 
+                min-width: 0; /* Al imprimir quitamos el ancho forzado */
+                display: block;
+            }
             .control-panel { display: none; }
-            #horario-container { box-shadow: none; width: 100%; }
-            textarea { font-size: 11px; } /* Ajuste para papel */
+            #horario-container { 
+                box-shadow: none; 
+                width: 100%; 
+            }
+            textarea { font-size: 10px; height: 35px; } 
         }
     </style>
 </head>
@@ -180,12 +188,12 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 12%;">EMPLEADO</th>
-                    <th style="width: 12%;">LUNES</th>
-                    <th style="width: 12%;">MARTES</th>
-                    <th style="width: 12%;">MIÉRCOLES</th>
-                    <th style="width: 12%;">JUEVES</th>
-                    <th style="width: 12%;">VIERNES</th>
+                    <th style="width: 11%;">EMPLEADO</th>
+                    <th style="width: 11%;">LUNES</th>
+                    <th style="width: 11%;">MARTES</th>
+                    <th style="width: 11%;">MIÉRCOLES</th>
+                    <th style="width: 11%;">JUEVES</th>
+                    <th style="width: 11%;">VIERNES</th>
                     <th style="width: 12%; background-color: #444;">SÁBADO</th>
                     <th style="width: 12%; background-color: #444;">DOMINGO</th>
                 </tr>
@@ -247,9 +255,13 @@
         function descargarImagen() {
             const elemento = document.getElementById("horario-container");
             html2canvas(elemento, {
-                scale: 3, // CALIDAD AUMENTADA (Se verá mucho más nítido)
+                scale: 3, 
                 backgroundColor: "#ffffff",
-                windowWidth: 1450 // Asegura que todo el texto quepa antes de la foto
+                windowWidth: 1500, // Forzamos el ancho para la foto
+                onclone: (document) => {
+                    // Truco para que la foto salga perfecta aunque en el móvil se vea con scroll
+                    document.getElementById("horario-container").style.width = "1500px";
+                }
             }).then(canvas => {
                 const link = document.createElement("a");
                 const fecha = new Date().toISOString().slice(0,10);
